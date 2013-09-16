@@ -22,9 +22,15 @@
     <body>
         <div class="container">
             <div id="header">
-                <h1><a href="{{ url_for('index') }}"><span class="label label-default">{{ siteName }}</span></a></h1>
+                <h1>
+                    <a href="{{ url_for('index') }}"><span class="label label-default">{{ siteName }}</span></a>
+                    <a href="https://github.com/KokaKiwi/pshare" target="_blank"><span class="label label-success" style="font-size: 0.5em;">git</span></a>
+                </h1>
             </div>
             {% block content %}{% endblock %}
         </div>
     </body>
+    <!--
+        P'Share by KokaKiwi: https://github.com/KokaKiwi/pshare
+    -->
 </html>
