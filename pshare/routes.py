@@ -78,6 +78,26 @@ def delete(oid):
     return {'status': 'OK'}
 
 if settings.debug:
+    def message_to_json(message):
+        o = dict()
+        o['date'] = str(message.date)
+        o['pad_id'] = message.pad_id
+        o['content'] = message.content
+
+        return o
+
+    def pad_to_json(pad):
+        o = dict()
+        o['date'] = str(pad.date)
+        o['owner_id'] = pad.owner_id
+        o['pad_id'] = pad.pad_id
+        o['messages'] = []
+
+        for message in pad.messages:
+            o['messages'].append(message_to_json(message))
+
+        return o
+
     # List pads
     @app.route('/pads')
     @json(pretty_print = True)
@@ -87,15 +107,7 @@ if settings.debug:
 
         pads = []
         for item in items:
-            pad = dict()
-            pad['owner_id'] = item.owner_id
-            pad['pad_id'] = item.pad_id
-            pad['messages'] = []
-
-            for message in item.messages:
-                pad['messages'].append(message.content)
-
-            pads.append(pad)
+            pads.append(pad_to_json(item))
 
         return pads
 
@@ -108,10 +120,6 @@ if settings.debug:
 
         messages = []
         for item in items:
-            message = dict()
-            message['pad_id'] = item.pad_id
-            message['content'] = item.content
-
-            messages.append(message)
+            messages.append(message_to_json(item))
 
         return messages

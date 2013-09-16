@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 from sqlalchemy import *
 from sqlalchemy.orm import *
 from sqlalchemy.ext.declarative import declarative_base
@@ -19,12 +20,14 @@ class Pad(Base):
     __tablename__ = 'pads'
 
     id = Column(Integer, primary_key = True)
+    date = Column(DateTime)
     owner_id = Column(String(128))
     pad_id = Column(String(128))
 
     messages = relationship('Message', backref = 'pad', cascade = 'all, delete, delete-orphan')
 
     def __init__(self, owner_id):
+        self.date = datetime.today()
         self.owner_id = owner_id
         self.pad_id = utils.random.transform(owner_id, length = settings.public_id_length)
 
@@ -40,10 +43,12 @@ class Message(Base):
     __tablename__ = 'messages'
 
     id = Column(Integer, primary_key = True)
+    date = Column(DateTime)
     pad_id = Column(Integer, ForeignKey('pads.pad_id'))
     content = Column(Text)
 
     def __init__(self, pad_id, content):
+        self.date = datetime.today()
         self.pad_id = pad_id
         self.content = content
 
