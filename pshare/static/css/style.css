@@ -1,0 +1,129 @@
+/*
+    P'Share CSS
+ */
+
+/* Main */
+body
+{
+    padding-top: 40px;
+    padding-bottom: 40px;
+    background-color: #eee;
+}
+
+/* Header */
+h1, h2, h3
+{
+    text-align: center;
+}
+
+div#header a:hover
+{
+    text-decoration: none;
+}
+
+/* Utils */
+.centered
+{
+    max-width: 540px;
+    margin: 0 auto;
+}
+
+/* Bootstrap fixes */
+div.input-group > input.form-control
+{
+    border-left: 0;
+}
+
+/* Form */
+.form-center
+{
+    max-width: 440px;
+    padding: 15px;
+    margin: 0 auto;
+}
+
+.form-center .form-control
+{
+    position: relative;
+    font-size: 16px;
+    height: auto;
+    padding: 10px;
+
+    box-sizing: border-box;
+}
+
+.form-center .form-control:focus
+{
+    z-index: 2;
+}
+
+.form-center input[type="text"]
+{
+    margin-bottom: -1px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.form-center input[type="password"]
+{
+    margin-bottom: 10px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+}
+
+/* Create pad */
+button#create-pad
+{
+    margin-top: 10px;
+}
+
+a#pad-url
+{
+    margin-top: 10px;
+}
+
+/* Owner pad */
+div#private-pad-url
+{
+    margin-top: 20px;
+}
+
+div.input-url
+{
+    margin-top: 10px;
+}
+
+div.input-url > div > a.btn
+{
+    width: 160px;
+}
+
+/* Public pad */
+div#message > span
+{
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+div#message > textarea
+{
+    border-top-left-radius: 0;
+}
+
+div#message > textarea:focus
+{
+    border-color: none;
+    box-shadow: none;
+    -webkit-box-shadow: none;
+    outline: none;
+}
+
+div#sentAlert
+{
+    margin-top: 5px;
+}
+
+a#message-send
+{
+    margin-top: 10px;
+}

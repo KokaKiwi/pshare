@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+<script>
+    $(document).ready(function() {
+        $('form#create-pad-form').submit(function(e) {
+            e.preventDefault();
+
+            var id = $('input#pad-owner-id').val(), password = $('input#pad-password').val();
+
+            var pad = pshare.createPad(id, password);
+            var url = "{{ url_for('owner', oid = 'OID') | replace('OID', '{0}') }}#{1}".format(pad.id, pad.password);
+
+            $('a#pad-url').attr('href', url).show().focus();
+        });
+
+        $('input#pad-owner-id').change(function() {
+            $('a#pad-url').hide()
+        });
+        $('input#pad-password').change(function() {
+            $('a#pad-url').hide()
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<form id="create-pad-form" class="form-center">
+    <input type="text" id="pad-owner-id" class="form-control" placeholder="Pad ID (Keep empty to generate one)" />
+    <input type="password" id="pad-password" class="form-control" placeholder="Pad password (Keep empty to generate one)" />
+
+    <button id="create-pad" class="btn btn-lg btn-primary btn-block" type="submit" autofocus>Create pad</button>
+
+    <a id="pad-url" class="btn btn-lg btn-primary btn-block" style="display: none;">Go to your pad</a>
+</form>
+{% endblock %}

@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+<script>
+    var password = window.location.hash.replace('#', '').replace(/(\?|&).*$/, '');
+
+    $(document).ready(function() {
+        var sending = false;
+        $('a#message-send').click(function() {
+            var content = $('textarea#message-content').val();
+            var $link = $(this);
+
+            if (content.length > 0 && !sending) {
+                content = pshare.encrypt(password, content);
+
+                sending = true;
+                $link.text('Sending...');
+                $.post("{{ url_for('send', pid = pad.pid) }}", {
+                    content: content
+                }, function(data) {
+                    data = JSON.parse(data);
+                    if (data.status == 'OK') {
+                        $('textarea#message-content').val('');
+
+                        $link.removeClass('btn-primary').addClass('btn-success').text('Sent!');
+                        setTimeout(function() {
+                            $link.removeClass('btn-success').addClass('btn-primary').text('Send message');
+                        }, 1000);
+                    }
+                });
+            }
+        });
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="centered">
+    <div id="message">
+        <span class="label label-default">Your message:</span>
+        <textarea id="message-content" class="form-control" rows="6"></textarea>
+    </div>
+
+    <a id="message-send" class="btn btn-lg btn-primary btn-block">Send message</a>
+</div>
+{% endblock %}

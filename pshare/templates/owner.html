@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block javascript %}
+<script>
+    var password = window.location.hash.replace('#', '').replace(/(\?|&).*$/, '');
+
+    var private_url = "{{ url_for('owner', oid = pad.oid) }}#{0}".format(password);
+    var public_url = "{{ url_for('pad', pid = pad.pid) }}#{0}".format(password);
+    var delete_url = "{{ url_for('delete', oid = pad.oid) }}";
+
+    var messages = [
+        {%- for message in pad.messages %}
+        '{{ message.content | safe }}',
+        {%- endfor %}
+    ];
+
+    $(document).ready(function() {
+        $private_url = $('#private-pad-url');
+        $public_url = $('#public-pad-url');
+        $delete_url = $('#delete-pad-url');
+
+        $('input[type="text"]').click(function(e) {
+            e.preventDefault();
+            e.stopPropagation();
+
+            this.focus();
+            this.select();
+        });
+
+        $private_url.find('a').attr('href', private_url);
+        $private_url.find('input[type="text"]').val(window.location.origin + private_url);
+
+        $public_url.find('a').attr('href', public_url);
+        $public_url.find('input[type="text"]').val(window.location.origin + public_url);
+
+        var confirm = true;
+        $delete_url.find('a').click(function(e) {
+            var self = $(this);
+            e.preventDefault();
+
+            if (confirm) {
+                confirm = false;
+                self.text('Sure?');
+            } else {
+                $.post(delete_url, function(data) {
+                    data = JSON.parse(data);
+
+                    if (data.status == 'OK') {
+                        $('div#deleteModal').modal({
+                            keyboard: false
+                        });
+                    }
+                });
+            }
+        });
+
+        $messages = $('div#pad-messages');
+        for(var i = 0; i < messages.length; i++) {
+            var message = messages[i];
+            var content = pshare.decrypt(password, message);
+
+            $messages.append('<hr />');
+            $element = $('<pre></pre>').text(content).appendTo($messages);
+        }
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div id="private-pad-url" class="centered input-group input-url">
+    <div class="input-group-btn">
+        <a class="btn btn-default">Private pad URL</a>
+    </div>
+    <input type="text" class="form-control" />
+</div>
+
+<div id="public-pad-url" class="centered input-group input-url">
+    <div class="input-group-btn">
+        <a class="btn btn-default" target="_blank">Public pad URL</a>
+    </div>
+    <input type="text" class="form-control" />
+</div>
+
+<div id="delete-pad-url" class="centered input-url">
+    <a class="btn btn-danger btn-block" href="javascript:void(0);">Delete pad</a>
+</div>
+
+<h2><span class="label label-default">Messages</span></h2>
+<div id="pad-messages" class="centered"></div>
+
+<div id="deleteModal" class="modal fade" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                Pad deleted
+            </div>
+            <div class="modal-body">
+                Your pad has been successfully deleted.
+            </div>
+            <div class="modal-footer">
+                <a class="btn btn-primary" href="{{ url_for('index') }}">Return to home</a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

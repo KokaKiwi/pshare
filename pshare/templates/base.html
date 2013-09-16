@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>{{ siteName }}{% block title %}{% endblock %}</title>
+        <script src="//code.jquery.com/jquery.min.js"></script>
+        <script src="{{ url_for('static', filename = 'js/sjcl.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/crypto-js/rollups/ripemd160.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/crypto-js/components/enc-base64-min.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/bootstrap.min.js') }}"></script>
+        <script src="{{ url_for('static', filename = 'js/pshare.js') }}"></script>
+        <script>
+            $(document).ready(function() {
+                pshare.PRIVATE_ID_LENGTH = {{ settings.private_id_length }};
+                pshare.PASSWORD_LENGTH = {{ settings.password_length }};
+            });
+        </script>
+        {% block javascript %}{% endblock %}
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename = 'css/bootstrap.min.css') }}">
+        <link rel="stylesheet" type="text/css" media="screen" href="{{ url_for('static', filename = 'css/style.css') }}">
+        {% block stylesheet %}{% endblock %}
+    </head>
+    <body>
+        <div class="container">
+            <div id="header">
+                <h1><a href="{{ url_for('index') }}"><span class="label label-default">{{ siteName }}</span></a></h1>
+            </div>
+            {% block content %}{% endblock %}
+        </div>
+    </body>
+</html>

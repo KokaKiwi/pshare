@@ -1,0 +1,7 @@
+# Python files
+__pycache__
+*.pyc
+
+# pshare files
+pshare.db
+settings.json
