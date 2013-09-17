@@ -23,8 +23,8 @@
         <div class="container">
             <div id="header">
                 <h1>
-                    <a href="{{ url_for('index') }}"><span class="label label-default">{{ siteName }}</span></a>
-                    <a href="https://github.com/KokaKiwi/pshare" target="_blank"><span class="label label-success" style="font-size: 0.5em;">git</span></a>
+                    <a id="title" href="{{ url_for('index') }}"><span class="label label-default">{{ siteName }}</span></a>
+                    <a id="git-button" href="https://github.com/KokaKiwi/pshare" target="_blank"><span class="label label-success">git</span></a>
                 </h1>
             </div>
             {% block content %}{% endblock %}

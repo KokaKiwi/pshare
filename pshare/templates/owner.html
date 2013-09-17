@@ -40,15 +40,15 @@
 
             if (confirm) {
                 confirm = false;
-                self.text('Sure?');
+                self.removeClass('btn-warning').addClass('btn-danger').text('Sure?');
             } else {
+                self.text('Deleting...');
                 $.post(delete_url, function(data) {
                     data = JSON.parse(data);
 
                     if (data.status == 'OK') {
-                        $('div#deleteModal').modal({
-                            keyboard: false
-                        });
+                        self.text('Deleted');
+                        window.location = window.location.origin;
                     }
                 });
             }
@@ -82,25 +82,9 @@
 </div>
 
 <div id="delete-pad-url" class="centered input-url">
-    <a class="btn btn-danger btn-block" href="javascript:void(0);">Delete pad</a>
+    <a class="btn btn-default btn-block" href="javascript:void(0);">Delete pad</a>
 </div>
 
 <h2><span class="label label-default">Messages</span></h2>
 <div id="pad-messages" class="centered"></div>
-
-<div id="deleteModal" class="modal fade" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                Pad deleted
-            </div>
-            <div class="modal-body">
-                Your pad has been successfully deleted.
-            </div>
-            <div class="modal-footer">
-                <a class="btn btn-primary" href="{{ url_for('index') }}">Return to home</a>
-            </div>
-        </div>
-    </div>
-</div>
 {% endblock %}
