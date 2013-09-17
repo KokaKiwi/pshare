@@ -13,7 +13,10 @@ alphafull = alphanum + punctuation
 def generate(length = 8, chars = alphanum):
     return ''.join(random.choice(chars) for x in range(length))
 
-def transform(h, length = None, strip = True):
+def transform(h, salt = None, length = None, strip = True):
+    if salt:
+        h += str(salt)
+
     h = h.encode()
 
     h = hashlib.sha1(h).digest()

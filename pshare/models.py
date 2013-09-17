@@ -29,7 +29,7 @@ class Pad(Base):
     def __init__(self, owner_id):
         self.date = datetime.today()
         self.owner_id = owner_id
-        self.pad_id = utils.random.transform(owner_id, length = settings.public_id_length)
+        self.pad_id = utils.random.transform(owner_id, length = settings.public_id_length, salt = settings.secret)
 
     @property
     def oid(self):
