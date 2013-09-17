@@ -4,9 +4,14 @@
 <script>
     var password = window.location.hash.replace('#', '').replace(/(\?|&).*$/, '');
 
-    var private_url = "{{ url_for('owner', oid = pad.oid) }}#{0}".format(password);
-    var public_url = "{{ url_for('pad', pid = pad.pid) }}#{0}".format(password);
+    var private_url = "{{ url_for('owner', oid = pad.oid) }}#" + password;
+    var public_url = "{{ url_for('pad', pid = pad.pid) }}#" + password;
     var delete_url = "{{ url_for('delete', oid = pad.oid) }}";
+
+    var base_url = window.location.origin;
+    if (window.navigator.appName == "Opera") {
+        base_url = window.location.protocol + '//' + window.location.host;
+    }
 
     var messages = [
         {%- for message in pad.messages %}
@@ -28,10 +33,10 @@
         });
 
         $private_url.find('a').attr('href', private_url);
-        $private_url.find('input[type="text"]').val(window.location.origin + private_url);
+        $private_url.find('input[type="text"]').val(base_url + private_url);
 
         $public_url.find('a').attr('href', public_url);
-        $public_url.find('input[type="text"]').val(window.location.origin + public_url);
+        $public_url.find('input[type="text"]').val(base_url + public_url);
 
         var confirm = true;
         $delete_url.find('a').click(function(e) {
@@ -48,8 +53,9 @@
 
                     if (data.status == 'OK') {
                         self.text('Deleted');
-                        window.location = window.location.origin;
                     }
+
+                    window.location = base_url;
                 });
             }
         });

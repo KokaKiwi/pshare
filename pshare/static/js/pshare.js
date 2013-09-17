@@ -1,12 +1,26 @@
 sjcl.random.startCollectors();
 
 var pshare = {
+    random: function(n) {
+        var words = []
+
+        for (var i = 0; i < n; i++) {
+            words.push(Math.random());
+        }
+
+        return words;
+    },
+
     uniqueId: function(length) {
         if (!length) {
             length = 8;
         }
 
-        var words = sjcl.random.randomWords(length);
+        var words = this.random(length);
+        try {
+            words = sjcl.random.randomWords(length);
+        } catch (e) { /* This function can fail in Opera. :( */ }
+
         var id = this.hash(words);
         id = this.transform(id, length);
         return id.substr(0, length);
