@@ -6,7 +6,7 @@
 
     $(document).ready(function() {
         var sending = false;
-        $('a#message-send').click(function() {
+        $('#message-send').click(function() {
             var content = $('textarea#message-content').val();
             var $link = $(this);
 
@@ -41,6 +41,6 @@
         <textarea id="message-content" class="form-control" rows="6"></textarea>
     </div>
 
-    <a id="message-send" class="btn btn-lg btn-primary btn-block">Send message</a>
+    <button id="message-send" class="btn btn-lg btn-primary btn-block">Send message</button>
 </div>
 {% endblock %}

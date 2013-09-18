@@ -39,7 +39,7 @@
         $public_url.find('input[type="text"]').val(base_url + public_url);
 
         var confirm = true;
-        $delete_url.find('a').click(function(e) {
+        $delete_url.find('button').click(function(e) {
             var self = $(this);
             e.preventDefault();
 
@@ -88,7 +88,7 @@
 </div>
 
 <div id="delete-pad-url" class="centered input-url">
-    <a class="btn btn-default btn-block" href="javascript:void(0);">Delete pad</a>
+    <button class="btn btn-default btn-block" href="javascript:void(0);">Delete pad</button>
 </div>
 
 <h2><span class="label label-default">Messages</span></h2>

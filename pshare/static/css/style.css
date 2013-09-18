@@ -130,9 +130,8 @@ div#message > textarea:focus
     outline: none;
 }
 
-a#message-send
+#message-send
 {
-    /*margin-top: 10px;*/
     border-top-left-radius: 0;
     border-top-right-radius: 0;
 }
